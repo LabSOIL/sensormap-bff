@@ -7,6 +7,8 @@ from app.areas import router as areas_router
 from app.sensors import router as sensors_router
 from app.sensordata import router as sensordata_router
 from app.users import router as users_router
+from app.soil_profiles import router as soil_profiles_router
+from app.soil_types import router as soil_types_router
 
 app = FastAPI()
 
@@ -66,4 +68,14 @@ app.include_router(
     users_router,
     prefix=f"{config.API_PREFIX}/users",
     tags=["users"],
+)
+app.include_router(
+    soil_profiles_router,
+    prefix=f"{config.API_PREFIX}/soil_profiles",
+    tags=["soil", "soil_profiles"],
+)
+app.include_router(
+    soil_types_router,
+    prefix=f"{config.API_PREFIX}/soil_types",
+    tags=["soil", "soil_types"],
 )
