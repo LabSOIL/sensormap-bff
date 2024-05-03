@@ -10,6 +10,7 @@ from app.users import router as users_router
 from app.soil_profiles import router as soil_profiles_router
 from app.soil_types import router as soil_types_router
 from app.plots import plots as plots_router
+from app.projects import router as projects_router
 
 app = FastAPI()
 
@@ -84,4 +85,9 @@ app.include_router(
     plots_router.router,
     prefix=f"{config.API_PREFIX}/plots",
     tags=["plots"],
+)
+app.include_router(
+    projects_router,
+    prefix=f"{config.API_PREFIX}/projects",
+    tags=["projects"],
 )
