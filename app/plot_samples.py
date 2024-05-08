@@ -10,23 +10,23 @@ from app.auth import require_admin
 router = APIRouter()
 
 
-@router.get("/{plot_id}")
-async def get_plot(
+@router.get("/{plot_sample_id}")
+async def get_plot_sample(
     client: httpx.AsyncClient = Depends(get_async_client),
     *,
-    plot_id: UUID,
+    plot_sample_id: UUID,
 ) -> Any:
-    """Get an plot by id"""
+    """Get a plot samples by id"""
 
     res = await client.get(
-        f"{config.SOIL_API_URL}/v1/plots/{plot_id}",
+        f"{config.SOIL_API_URL}/v1/plot_samples/{plot_sample_id}",
     )
 
     return res.json()
 
 
 @router.get("")
-async def get_plots(
+async def get_plot_samples(
     request: Request,
     response: Response,
     *,
@@ -35,9 +35,9 @@ async def get_plots(
     range: str = None,
     client: httpx.AsyncClient = Depends(get_async_client),
 ) -> Any:
-    """Get all plots"""
+    """Get all plot_samples"""
     res = await client.get(
-        f"{config.SOIL_API_URL}/v1/plots",
+        f"{config.SOIL_API_URL}/v1/plot_samples",
         params={"sort": sort, "range": range, "filter": filter},
     )
     response.headers["Access-Control-Expose-Headers"] = "Content-Range"
@@ -47,45 +47,48 @@ async def get_plots(
 
 
 @router.post("")
-async def create_plot(
-    plot: Any = Body(...),
+async def create_plot_sample(
+    plot_sample: Any = Body(...),
     client: httpx.AsyncClient = Depends(get_async_client),
     user: User = Depends(require_admin),
 ) -> Any:
-    """Creates an plot"""
+    """Creates a plot samples"""
 
     res = await client.post(
-        f"{config.SOIL_API_URL}/v1/plots",
-        json=plot,
+        f"{config.SOIL_API_URL}/v1/plot_samples",
+        json=plot_sample,
     )
 
     return res.json()
 
 
-@router.put("/{plot_id}")
-async def update_plot(
-    plot_id: UUID,
-    plot: Any = Body(...),
+@router.put("/{plot_sample_id}")
+async def update_plot_sample(
+    plot_sample_id: UUID,
+    plot_sample: Any = Body(...),
     client: httpx.AsyncClient = Depends(get_async_client),
     user: User = Depends(require_admin),
 ) -> Any:
-    """ "Updates an plot by id"""
+    """ "Updates a plot samples by id"""
 
     res = await client.put(
-        f"{config.SOIL_API_URL}/v1/plots/{plot_id}", json=plot
+        f"{config.SOIL_API_URL}/v1/plot_samples/{plot_sample_id}",
+        json=plot_sample,
     )
 
     return res.json()
 
 
-@router.delete("/{plot_id}")
-async def delete_plot(
-    plot_id: UUID,
+@router.delete("/{plot_sample_id}")
+async def delete_plot_sample(
+    plot_sample_id: UUID,
     client: httpx.AsyncClient = Depends(get_async_client),
     user: User = Depends(require_admin),
 ) -> None:
-    """Delete an plot by id"""
+    """Delete a plot samples by id"""
 
-    res = await client.delete(f"{config.SOIL_API_URL}/v1/plots/{plot_id}")
+    res = await client.delete(
+        f"{config.SOIL_API_URL}/v1/plot_samples/{plot_sample_id}"
+    )
 
     return res.json()
