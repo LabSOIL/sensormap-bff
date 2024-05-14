@@ -6,6 +6,7 @@ import httpx
 from uuid import UUID
 from app.models.user import User
 from app.auth import require_admin
+from app.utils import _reverse_proxy
 
 router = APIRouter()
 
@@ -60,6 +61,16 @@ async def create_plot(
     )
 
     return res.json()
+
+
+@router.post("/batch")
+async def create_plot_sample_batch(
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> Any:
+    """Creates a plot samples from a batch import"""
+
+    return reverse_proxy
 
 
 @router.put("/{plot_id}")

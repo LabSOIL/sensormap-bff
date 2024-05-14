@@ -1,6 +1,9 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.background import BackgroundTask
+from fastapi.responses import StreamingResponse
 from app.config import config
+from app.utils import lifespan
 from app.models.config import KeycloakConfig
 from app.models.health import HealthCheck
 from app.areas import router as areas_router
@@ -13,8 +16,8 @@ from app.plots import router as plots_router
 from app.plot_samples import router as plot_samples_router
 from app.projects import router as projects_router
 
-app = FastAPI()
 
+app = FastAPI(lifespan=lifespan)
 
 origins = ["*"]
 
@@ -25,6 +28,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 
 
 @app.get(f"{config.API_PREFIX}/config/keycloak")
