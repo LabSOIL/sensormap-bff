@@ -15,7 +15,7 @@ from app.soil_types import router as soil_types_router
 from app.plots import router as plots_router
 from app.plot_samples import router as plot_samples_router
 from app.projects import router as projects_router
-
+from app.utils import router as utils_router
 
 app = FastAPI(lifespan=lifespan)
 
@@ -28,8 +28,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 
 
 @app.get(f"{config.API_PREFIX}/config/keycloak")
@@ -101,4 +99,9 @@ app.include_router(
     projects_router,
     prefix=f"{config.API_PREFIX}/projects",
     tags=["projects"],
+)
+app.include_router(
+    utils_router,
+    prefix=f"{config.API_PREFIX}/utils",
+    tags=["utils"],
 )
