@@ -1,33 +1,11 @@
-# sensormap-bff
-The backend-for-frontend for sensormap
+# SOIL Sensormap BFF
 
+The Backend-for-Frontend application for the SOIL Sensormap project, a
+fullstack application to assist in fieldwork for the
+[Soil Biogeochemistry Laboratory](https://www.epfl.ch/labs/soil/) at
+[EPFL](https://www.epfl.ch/).
 
 ## Getting started
 
-The app requires the following environment variables:
-```
-KEYCLOAK_REALM
-KEYCLOAK_URL
-
-KEYCLOAK_CLIENT_ID   # The UI client ID
-
-KEYCLOAK_BFF_ID      # The BFF client ID
-KEYCLOAK_BFF_SECRET  # The BFF client's secret
-```
-
-To start the app run:
-
-```
-KEYCLOAK_CLIENT_ID=test \
-    KEYCLOAK_BFF_ID=test \
-    KEYCLOAK_BFF_SECRET=test \
-    KEYCLOAK_REALM=realmtest \
-    KEYCLOAK_URL=https://test.com \
-    poetry run uvicorn app.main:app --reload
-```
-
-There will be a route available at"
-
-```
-http://127.0.0.1:8000/config/keycloak
-```
+Please refer to the documentation of the
+[sensormap-ui](https://github.com/LabSOIL/sensormap-ui) for more information.
