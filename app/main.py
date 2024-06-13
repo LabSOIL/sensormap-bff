@@ -16,6 +16,7 @@ from app.plots import router as plots_router
 from app.plot_samples import router as plot_samples_router
 from app.projects import router as projects_router
 from app.utils import router as utils_router
+from app.transects import router as transects_router
 
 app = FastAPI(lifespan=lifespan)
 
@@ -104,4 +105,9 @@ app.include_router(
     utils_router,
     prefix=f"{config.API_PREFIX}/utils",
     tags=["utils"],
+)
+app.include_router(
+    transects_router,
+    prefix=f"{config.API_PREFIX}/transects",
+    tags=["transects"],
 )
