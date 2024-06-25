@@ -3,7 +3,6 @@ from fastapi import Depends, APIRouter
 from uuid import UUID
 from app.models.user import User
 from app.tools.auth import require_admin
-
 from app.tools.proxy import _reverse_proxy
 
 
@@ -58,6 +57,16 @@ async def update_plot_sample(
     user: User = Depends(require_admin),
 ) -> Any:
     """ "Updates a plot samples by id"""
+
+    return reverse_proxy
+
+
+@router.delete("/batch")
+async def delete_batch(
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> None:
+    """Delete by a list of ids"""
 
     return reverse_proxy
 

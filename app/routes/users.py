@@ -1,13 +1,9 @@
 from typing import Any
-from fastapi import Depends, APIRouter, Query, Response, Body, Security
+from fastapi import Depends, APIRouter, Query, Response
 from app.config import config
-from app.tools.proxy import get_async_client
-import httpx
-from uuid import UUID
 from app.models.user import User
-from app.tools.auth import require_admin, get_user_info
+from app.tools.auth import require_admin
 from keycloak import KeycloakAdmin, KeycloakOpenIDConnection
-from app.tools.auth import oauth2_scheme, get_payload
 from pydantic import BaseModel
 import json
 
@@ -45,9 +41,9 @@ async def get_users(
     False.
     """
 
-    sort = json.loads(sort) if sort else []
-    range = json.loads(range) if range else []
-    filter = json.loads(filter) if filter else {}
+    sort: list[Any] = json.loads(sort) if sort else []
+    range: list[Any] = json.loads(range) if range else []
+    filter: dict[Any, Any] = json.loads(filter) if filter else {}
 
     # Get admin role users
     admin_users = keycloak_admin.get_realm_role_members("admin")

@@ -1,8 +1,6 @@
 from typing import Any
 from fastapi import Depends, APIRouter, Response, Body, Request
-from app.config import config
-from app.tools.proxy import get_async_client, _reverse_proxy
-import httpx
+from app.tools.proxy import _reverse_proxy
 from uuid import UUID
 from app.models.user import User
 from app.tools.auth import require_admin
@@ -50,6 +48,16 @@ async def update_area(
     user: User = Depends(require_admin),
 ) -> Any:
     """ "Updates an area by id"""
+
+    return reverse_proxy
+
+
+@router.delete("/batch")
+async def delete_batch(
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> None:
+    """Delete by a list of ids"""
 
     return reverse_proxy
 

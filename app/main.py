@@ -1,7 +1,5 @@
-from fastapi import FastAPI, status, Request
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.background import BackgroundTask
-from fastapi.responses import StreamingResponse
 from app.config import config
 from app.tools.proxy import lifespan
 from app.models.config import KeycloakConfig

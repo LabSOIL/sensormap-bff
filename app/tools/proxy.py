@@ -1,13 +1,10 @@
 import httpx
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from starlette.background import BackgroundTask
 from fastapi.responses import StreamingResponse
 from contextlib import asynccontextmanager
 from app.config import config
-from typing import Any
-from fastapi import Depends, APIRouter
-from app.models.user import User
-from app.tools.auth import get_user_info
+from fastapi import APIRouter
 
 
 router = APIRouter()
@@ -33,8 +30,10 @@ async def _reverse_proxy(
     request: Request,
 ):
     client = request.state.client
-
     path = request.url.path.replace("/api", "/v1")
+    path = path.replace("/soil_profiles", "/soil/profiles")
+    path = path.replace("/soil_types", "/soil/types")
+
     url = httpx.URL(
         path=path,
         query=request.url.query.encode("utf-8"),
@@ -46,6 +45,7 @@ async def _reverse_proxy(
         content=request.stream(),
     )
     r = await client.send(req, stream=True)
+
     return StreamingResponse(
         r.aiter_raw(),
         status_code=r.status_code,

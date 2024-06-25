@@ -61,6 +61,16 @@ async def update_transect(
     return reverse_proxy
 
 
+@router.delete("/batch")
+async def delete_batch(
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> None:
+    """Delete by a list of ids"""
+
+    return reverse_proxy
+
+
 @router.delete("/{transect_id}")
 async def delete_transect(
     transect_id: UUID,
