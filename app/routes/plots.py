@@ -1,73 +1,75 @@
 from typing import Any
-from fastapi import Depends, APIRouter
-from app.utils import _reverse_proxy
+from fastapi import Depends, APIRouter, Response, Body, Request
+from app.config import config
+from app.tools.proxy import get_async_client
+import httpx
 from uuid import UUID
 from app.models.user import User
-from app.auth import require_admin
-from app.utils import _reverse_proxy
+from app.tools.auth import require_admin
 
+from app.tools.proxy import _reverse_proxy
 
 router = APIRouter()
 
 
-@router.get("/{plot_sample_id}")
-async def get_plot_sample(
-    plot_sample_id: UUID,
+@router.get("/{plot_id}")
+async def get_plot(
+    plot_id: UUID,
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> Any:
-    """Get a plot samples by id"""
+    """Get an plot by id"""
 
     return reverse_proxy
 
 
 @router.get("")
-async def get_plot_samples(
+async def get_plots(
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> Any:
-    """Get all plot_samples"""
+    """Get all plots"""
 
     return reverse_proxy
 
 
 @router.post("")
-async def create_plot_sample(
+async def create_plot(
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> Any:
-    """Creates a plot samples"""
+    """Creates an plot"""
 
     return reverse_proxy
 
 
 @router.post("/batch")
-async def create_plot_batch(
+async def create_plot_sample_batch(
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> Any:
-    """Creates plots from a batch import"""
+    """Creates a plot samples from a batch import"""
 
     return reverse_proxy
 
 
-@router.put("/{plot_sample_id}")
-async def update_plot_sample(
-    plot_sample_id: UUID,
+@router.put("/{plot_id}")
+async def update_plot(
+    plot_id: UUID,
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> Any:
-    """ "Updates a plot samples by id"""
+    """ "Updates an plot by id"""
 
     return reverse_proxy
 
 
-@router.delete("/{plot_sample_id}")
-async def delete_plot_sample(
-    plot_sample_id: UUID,
+@router.delete("/{plot_id}")
+async def delete_plot(
+    plot_id: UUID,
     reverse_proxy: Any = Depends(_reverse_proxy),
     user: User = Depends(require_admin),
 ) -> None:
-    """Delete a plot samples by id"""
+    """Delete an plot by id"""
 
     return reverse_proxy

@@ -1,13 +1,13 @@
 from typing import Any
 from fastapi import Depends, APIRouter, Query, Response, Body, Security
 from app.config import config
-from app.utils import get_async_client
+from app.tools.proxy import get_async_client
 import httpx
 from uuid import UUID
 from app.models.user import User
-from app.auth import require_admin, get_user_info
+from app.tools.auth import require_admin, get_user_info
 from keycloak import KeycloakAdmin, KeycloakOpenIDConnection
-from app.auth import oauth2_scheme, get_payload
+from app.tools.auth import oauth2_scheme, get_payload
 from pydantic import BaseModel
 import json
 

@@ -1,11 +1,11 @@
 from typing import Any
 from fastapi import Depends, APIRouter, Query, Response, Body
 from app.config import config
-from app.utils import get_async_client
+from app.tools.proxy import get_async_client
 import httpx
 from uuid import UUID
 from app.models.user import User
-from app.auth import require_admin
+from app.tools.auth import require_admin
 
 router = APIRouter()
 

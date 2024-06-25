@@ -3,20 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.background import BackgroundTask
 from fastapi.responses import StreamingResponse
 from app.config import config
-from app.utils import lifespan
+from app.tools.proxy import lifespan
 from app.models.config import KeycloakConfig
 from app.models.health import HealthCheck
-from app.areas import router as areas_router
-from app.sensors import router as sensors_router
-from app.sensordata import router as sensordata_router
-from app.users import router as users_router
-from app.soil_profiles import router as soil_profiles_router
-from app.soil_types import router as soil_types_router
-from app.plots import router as plots_router
-from app.plot_samples import router as plot_samples_router
-from app.projects import router as projects_router
-from app.utils import router as utils_router
-from app.transects import router as transects_router
+from app.routes.areas import router as areas_router
+from app.routes.sensors import router as sensors_router
+from app.routes.sensordata import router as sensordata_router
+from app.routes.users import router as users_router
+from app.routes.soil_profiles import router as soil_profiles_router
+from app.routes.soil_types import router as soil_types_router
+from app.routes.plots import router as plots_router
+from app.routes.plot_samples import router as plot_samples_router
+from app.routes.projects import router as projects_router
+from app.routes.utils import router as utils_router
+from app.routes.transects import router as transects_router
 
 app = FastAPI(lifespan=lifespan)
 
