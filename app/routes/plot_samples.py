@@ -50,6 +50,16 @@ async def create_plot_batch(
     return reverse_proxy
 
 
+@router.put("/batch")
+async def update_plot_sample(
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> Any:
+    """ "Updates a plot samples by id"""
+
+    return reverse_proxy
+
+
 @router.put("/{plot_sample_id}")
 async def update_plot_sample(
     plot_sample_id: UUID,
