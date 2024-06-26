@@ -15,6 +15,7 @@ from app.routes.plot_samples import router as plot_samples_router
 from app.routes.projects import router as projects_router
 from app.routes.utils import router as utils_router
 from app.routes.transects import router as transects_router
+from app.routes.gnss import router as gnss_router
 
 app = FastAPI(lifespan=lifespan)
 
@@ -108,4 +109,9 @@ app.include_router(
     transects_router,
     prefix=f"{config.API_PREFIX}/transects",
     tags=["transects"],
+)
+app.include_router(
+    gnss_router,
+    prefix=f"{config.API_PREFIX}/gnss",
+    tags=["gnss"],
 )
