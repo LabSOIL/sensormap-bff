@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.3] - 2024-06-28
+
+### Added
+
+- `Transect` and `GNSS` routes.
+- Bulk update on `plots` and `soil_profiles`.
+- Batch delete to all.
 
 ## [1.1.2] - 2024-06-10
 
@@ -22,3 +29,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased]: https://github.com/LabSOIL/sensormap-bff/compare/v1.1.1...HEAD
 [1.1.2]: https://github.com/LabSOIL/sensormap-bff/compare/0.0.1...0.1.2
+[1.1.3]: https://github.com/LabSOIL/sensormap-bff/compare/0.0.2...0.1.3
