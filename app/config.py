@@ -21,8 +21,8 @@ class Config(BaseSettings):
     SOIL_API_URL: str  # Full path to the Soil API (eg: http://soil-api-dev)
 
     TIMEOUT: httpx.Timeout = httpx.Timeout(
-        5.0,
-        connect=2.0,
+        20.0,
+        connect=5.0,
     )
     LIMITS: httpx.Limits = httpx.Limits(
         max_connections=500, max_keepalive_connections=50

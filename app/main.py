@@ -16,6 +16,8 @@ from app.routes.projects import router as projects_router
 from app.routes.utils import router as utils_router
 from app.routes.transects import router as transects_router
 from app.routes.gnss import router as gnss_router
+from app.routes.instruments import router as instruments_router
+from app.routes.instrument_channels import router as instrument_channels_router
 
 app = FastAPI(lifespan=lifespan)
 
@@ -114,4 +116,14 @@ app.include_router(
     gnss_router,
     prefix=f"{config.API_PREFIX}/gnss",
     tags=["gnss"],
+)
+app.include_router(
+    instruments_router,
+    prefix=f"{config.API_PREFIX}/instruments",
+    tags=["instruments"],
+)
+app.include_router(
+    instrument_channels_router,
+    prefix=f"{config.API_PREFIX}/instrument_channels",
+    tags=["instrument_channels"],
 )
