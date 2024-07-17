@@ -20,6 +20,36 @@ async def get_instrument(
     return reverse_proxy
 
 
+@router.get("/{instrument_id}/raw")
+async def get_instrument_raw_data(
+    instrument_id: UUID,
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> Any:
+
+    return reverse_proxy
+
+
+@router.get("/{instrument_id}/filtered")
+async def get_instrument_baseline_filtered_data(
+    instrument_id: UUID,
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> Any:
+
+    return reverse_proxy
+
+
+@router.get("/{instrument_id}/summary")
+async def get_instrument_summary(
+    instrument_id: UUID,
+    reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
+) -> Any:
+
+    return reverse_proxy
+
+
 @router.get("")
 async def get_instruments(
     reverse_proxy: Any = Depends(_reverse_proxy),
