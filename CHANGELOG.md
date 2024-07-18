@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-07-18
+
+### Added
+
+- Routes to support instrument processing.
+
 ## [1.1.3] - 2024-06-28
 
 ### Added
