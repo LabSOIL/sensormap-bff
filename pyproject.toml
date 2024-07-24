@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sensormap-bff"
-version = "1.2.0"
+version = "1.2.1"
 description = "The backend-for-frontend for sensormap"
 authors = ["Evan Thomas <evan.thomas@epfl.ch>"]
 readme = "README.md"
