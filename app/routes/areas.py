@@ -12,6 +12,7 @@ router = APIRouter()
 async def get_area(
     area_id: UUID,
     reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
 ) -> Any:
     """Get an area by id"""
 
@@ -23,6 +24,7 @@ async def get_areas(
     request: Request,
     response: Response,
     reverse_proxy: Any = Depends(_reverse_proxy),
+    user: User = Depends(require_admin),
 ) -> Any:
     """Get all areas"""
 
