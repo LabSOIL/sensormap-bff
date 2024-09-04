@@ -2,7 +2,7 @@ from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import config
 from app.tools.proxy import lifespan
-from app.models.config import KeycloakConfig
+from app.models.config import UIConfig
 from app.models.health import HealthCheck
 from app.routes.areas import router as areas_router
 from app.routes.sensors import router as sensors_router
@@ -32,12 +32,13 @@ app.add_middleware(
 )
 
 
-@app.get(f"{config.API_PREFIX}/config/keycloak")
-async def get_keycloak_config() -> KeycloakConfig:
-    return KeycloakConfig(
+@app.get(f"{config.API_PREFIX}/config")
+async def get_keycloak_config() -> UIConfig:
+    return UIConfig(
         clientId=config.KEYCLOAK_CLIENT_ID,
         realm=config.KEYCLOAK_REALM,
         url=config.KEYCLOAK_URL,
+        deployment=config.DEPLOYMENT,
     )
 
 

@@ -1,11 +1,19 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 import httpx
+from enum import Enum
+
+
+class DeploymentType(str, Enum):
+    LOCAL = "local"
+    DEV = "dev"
+    STAGE = "stage"
+    PROD = "prod"
 
 
 class Config(BaseSettings):
     API_PREFIX: str = "/api"
-
+    DEPLOYMENT: DeploymentType
     # Common Keycloaksettings
     KEYCLOAK_REALM: str
     KEYCLOAK_URL: str
