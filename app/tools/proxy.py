@@ -69,8 +69,14 @@ async def _reverse_proxy(
     )
     r = await client.send(req, stream=True)
 
+    async def chunked_response():
+        async for chunk in r.aiter_raw(
+            chunk_size=1024
+        ):  # Adjust chunk size if needed
+            yield chunk
+
     return StreamingResponse(
-        r.aiter_raw(),
+        chunked_response(),
         status_code=r.status_code,
         headers=r.headers,
         background=BackgroundTask(r.aclose),
