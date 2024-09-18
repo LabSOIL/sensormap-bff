@@ -23,16 +23,39 @@ async def lifespan(app: FastAPI):
         timeout=config.TIMEOUT,
         limits=config.LIMITS,
     ) as client:
-        yield {"client": client}
+        if config.SOIL_API_SECONDARY_URL is None:
+            # If no secondary URL is provided, use the primary URL for both
+            # clients
+            yield {"client": client, "client_secondary": client}
+        else:
+            async with httpx.AsyncClient(
+                base_url=f"{config.SOIL_API_SECONDARY_URL}",
+                timeout=config.TIMEOUT,
+                limits=config.LIMITS,
+            ) as secondary_client:
+                yield {"client": client, "client_secondary": secondary_client}
 
 
 async def _reverse_proxy(
     request: Request,
 ):
     client = request.state.client
+
     path = request.url.path.replace("/api", "/v1")
     path = path.replace("/soil_profiles", "/soil/profiles")
     path = path.replace("/soil_types", "/soil/types")
+
+    if request.method == "GET" and (
+        path
+        in [
+            "/v1/plots",
+            "/v1/areas",
+            "/v1/projects",
+        ]
+    ):
+        # These routes are in the refactored API and are used inplace of the
+        # primary API
+        client = request.state.client_secondary
 
     url = httpx.URL(
         path=path,

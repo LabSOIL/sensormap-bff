@@ -27,6 +27,7 @@ class Config(BaseSettings):
 
     # SOIL-API settings
     SOIL_API_URL: str  # Full path to the Soil API (eg: http://soil-api-dev)
+    SOIL_API_SECONDARY_URL: str | None = None  # The path to replacement API
 
     TIMEOUT: httpx.Timeout = httpx.Timeout(
         20.0,
