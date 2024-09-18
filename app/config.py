@@ -30,11 +30,12 @@ class Config(BaseSettings):
     SOIL_API_SECONDARY_URL: str | None = None  # The path to replacement API
 
     TIMEOUT: httpx.Timeout = httpx.Timeout(
-        20.0,
+        5.0,
         connect=5.0,
+        read=5.0,
     )
     LIMITS: httpx.Limits = httpx.Limits(
-        max_connections=500, max_keepalive_connections=50
+        max_connections=100, max_keepalive_connections=20
     )
 
 
