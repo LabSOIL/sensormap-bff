@@ -1,7 +1,7 @@
 import httpx
 from fastapi import FastAPI, Request, Depends
 from starlette.background import BackgroundTask
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from app.config import config
 from fastapi import APIRouter
@@ -41,6 +41,7 @@ async def _reverse_proxy(
 ):
     client = request.state.client
 
+    # Modify the path based on your existing rules
     path = request.url.path.replace("/api", "/v1")
     path = path.replace("/soil_profiles", "/soil/profiles")
     path = path.replace("/soil_types", "/soil/types")
@@ -53,10 +54,10 @@ async def _reverse_proxy(
             "/v1/projects",
         ]
     ):
-        # These routes are in the refactored API and are used inplace of the
-        # primary API
+        # Use secondary client for specific routes
         client = request.state.client_secondary
 
+    # Build the request to forward to the Rust API
     url = httpx.URL(
         path=path,
         query=request.url.query.encode("utf-8"),
@@ -65,19 +66,15 @@ async def _reverse_proxy(
         request.method,
         url,
         headers=request.headers.raw,
-        content=request.stream(),
+        content=await request.body(),  # Wait for full body content
     )
-    r = await client.send(req, stream=True)
 
-    async def chunked_response():
-        async for chunk in r.aiter_raw(
-            chunk_size=1024
-        ):  # Adjust chunk size if needed
-            yield chunk
+    # Send the request and get the full response
+    r = await client.send(req)
 
-    return StreamingResponse(
-        chunked_response(),
+    # Forward the entire response to the client without chunking
+    return JSONResponse(
+        content=r.json(),  # Assume the Rust API returns JSON
         status_code=r.status_code,
-        headers=r.headers,
-        background=BackgroundTask(r.aclose),
+        headers=dict(r.headers),
     )
