@@ -47,13 +47,17 @@ async def _reverse_proxy(
     path = path.replace("/soil_types", "/soil/types")
 
     if request.method == "GET" and (
-        path
-        in [
-            "/v1/plots",
-            "/v1/areas",
-            "/v1/projects",
-            "/v1/plot_samples",
-        ]
+        (
+            path
+            in [
+                "/v1/plots",
+                "/v1/areas",
+                "/v1/projects",
+                "/v1/plot_samples",
+                "/v1/sensors",
+            ]
+            or path.startswith("/v1/sensors/")
+        )
     ):
         # Use secondary client for specific routes
         client = request.state.client_secondary
