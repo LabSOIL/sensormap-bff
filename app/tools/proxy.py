@@ -52,6 +52,7 @@ async def _reverse_proxy(
             "/v1/plots",
             "/v1/areas",
             "/v1/projects",
+            "/v1/plot_samples",
         ]
     ):
         # Use secondary client for specific routes
