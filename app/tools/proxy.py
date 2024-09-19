@@ -56,7 +56,10 @@ async def _reverse_proxy(
                 "/v1/plot_samples",
                 "/v1/sensors",
             ]
-            or path.startswith("/v1/sensors/")
+            or (
+                path.startswith(("/v1/sensors", "/v1/transects"))
+                # or path.startswith("/v1/transects")
+            )
         )
     ):
         # Use secondary client for specific routes
