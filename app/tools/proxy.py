@@ -44,7 +44,7 @@ async def _reverse_proxy(
     # Modify the path based on your existing rules
     path = request.url.path.replace("/api", "/v1")
     path = path.replace("/soil_profiles", "/soil/profiles")
-    path = path.replace("/soil_types", "/soil/types")
+    # path = path.replace("/soil_types", "/soil/types")
 
     if request.method == "GET" and (
         (
@@ -57,7 +57,9 @@ async def _reverse_proxy(
                 "/v1/sensors",
             ]
             or (
-                path.startswith(("/v1/sensors", "/v1/transects"))
+                path.startswith(
+                    ("/v1/sensors", "/v1/transects", "/v1/soil_types")
+                )
                 # or path.startswith("/v1/transects")
             )
         )
